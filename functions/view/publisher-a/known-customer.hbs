@@ -1,0 +1,263 @@
+<main class='demo-container'>
+  <div class='demo__navigation'>
+    <p>
+      [<a href='{{{demoHomeUrl}}}'>Return to main page</a>] [<a href='{{{publisherBUrl}}}/known-customer'>Go to
+        "Publisher B" page</a>] [<a href='{{{contentProducerUrl}}}/payment-provider'>Go to "Payment provider" page</a>]
+    </p>
+  </div>
+  <div class='demo__header'>
+    <card class='demo__publisher-badge demo__publisher-badge--publisher-a'>
+      <h5>Publisher A</h5>
+    </card>
+    <h3>Shared storage - Known customer demo</h3>
+  </div>
+  <div class='demo__content'>
+    <iframe class='demo__dsp-iframe form-iframe' src='{{{contentProducerUrl}}}/url-selection/known-customer.html'></iframe>
+    
+    <!-- Add known customer info display section -->
+    <div id="knownCustomerInfo" class="demo__known-customer-info" style="display: none;">
+      <h4>Known Customer Information</h4>
+      <div class="user-profile">
+        <div class="profile-field">
+          <span class="field-label">Name:</span>
+          <span id="displayName" class="field-value">-</span>
+        </div>
+        <div class="profile-field">
+          <span class="field-label">Email:</span>
+          <span id="displayEmail" class="field-value">-</span>
+        </div>
+        <div class="profile-field">
+          <span class="field-label">Phone:</span>
+          <span id="displayPhone" class="field-value">-</span>
+        </div>
+        <div class="profile-field">
+          <span class="field-label">Location:</span>
+          <span id="displayLocation" class="field-value">-</span>
+        </div>
+        <div class="profile-field">
+          <span class="field-label">Website:</span>
+          <span id="displayWebsite" class="field-value">-</span>
+        </div>
+        <div class="profile-field">
+          <span class="field-label">Company:</span>
+          <span id="displayCompany" class="field-value">-</span>
+        </div>
+      </div>
+    </div>
+    
+    <card class='demo__description'>
+      <h4>Description</h4>
+      <p>
+        There may be cases where you want to render a different element based on whether the user has been seen before
+        at a different site. A payment provider may want to recognize users across multiple publisher sites.
+      </p>
+      <p>
+        In this demo, once you submit your information on Publisher A, it will be recognized on Publisher B, demonstrating cross-site recognition using the Shared Storage API.
+      </p>
+      <h4>How it works</h4>
+      <ul>
+        <li>User information is entered on Publisher A (this page)</li>
+        <li>Data is stored in Shared Storage with individual key/value pairs</li>
+        <li>Visit Publisher B to see your information recognized there</li>
+        <li>The Payment Provider page shows all stored data</li>
+      </ul>
+    </card>
+  </div>
+  <card class='demo__instructions'>
+    <p>
+      Shared Storage API is not enabled in your browser. Follow the
+      <a
+        href='https://developer.chrome.com/docs/privacy-sandbox/shared-storage/#try-the-shared-storage-api'
+        target='_blank'
+      >instructions</a>, and enable the the
+      <b>Privacy Sandbox Ads APIs</b>
+      experiment flag at
+      <b>chrome://flags/#privacy-sandbox-ads-apis</b>
+      with Chrome 104.0.5086.0 and above to test this Shared Storage API demo.
+    </p>
+  </card>
+</main>
+
+<style>
+  .form-iframe {
+    width: 100%;
+    height: 950px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    min-width: 500px;
+    background-color: #222;
+  }
+  
+  .demo__content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .demo__dsp-iframe {
+    margin-bottom: 20px;
+    min-height: 650px;
+    width: 100%;
+    max-width: 800px !important;
+  }
+  
+  @media screen and (min-width: 1200px) {
+    .demo__content {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+    
+    .form-iframe {
+      width: 700px;
+      margin-right: 30px;
+    }
+    
+    .demo__description {
+      max-width: 400px;
+    }
+  }
+  
+  /* Adjust iframe height based on content visibility */
+  .iframe-height-known-customer {
+    height: 450px;
+  }
+  
+  .iframe-height-form {
+    height: 950px;
+  }
+  
+  /* Override the default demo styles to give form more space */
+  .demo__dsp-iframe {
+    width: 100% !important;
+    max-width: 800px !important;
+    min-width: 500px !important;
+  }
+  
+  /* Make sure container has enough space */
+  .demo-container {
+    max-width: 1200px !important;
+    padding: 0 20px;
+  }
+  
+  @media screen and (min-width: 768px) {
+    .demo__content {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+  
+  /* Make sure the description doesn't constrain the form */
+  @media screen and (max-width: 1199px) {
+    .demo__description {
+      width: 100%;
+      max-width: 800px;
+    }
+  }
+  
+  /* Styling for the known customer info section */
+  .demo__known-customer-info {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 8px;
+    border: 1px solid #555;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    width: 100%;
+    max-width: 800px;
+    color: #fff;
+  }
+  
+  .user-profile {
+    padding: 15px;
+    border-radius: 6px;
+    background-color: #333;
+  }
+  
+  .profile-field {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #555;
+  }
+  
+  .field-label {
+    font-weight: bold;
+    margin-right: 12px;
+    min-width: 80px;
+    display: inline-block;
+    color: #fff;
+  }
+  
+  .field-value {
+    color: #ddd;
+  }
+</style>
+
+<script defer>
+  checkSharedStorage();
+  
+  // Adjust iframe height based on form state
+  function adjustIframeHeight() {
+    const iframe = document.querySelector('.form-iframe');
+    const knownCustomerInfo = document.getElementById('knownCustomerInfo');
+    
+    // Create message listener to receive state from iframe
+    window.addEventListener('message', function(event) {
+      if (event.data && event.data.type === 'knownCustomerState') {
+        if (event.data.isKnown) {
+          iframe.classList.add('iframe-height-known-customer');
+          iframe.classList.remove('iframe-height-form');
+          
+          // Show known customer info if we have user data
+          if (event.data.userData) {
+            knownCustomerInfo.style.display = 'block';
+            
+            // Update the display with user data
+            document.getElementById('displayName').textContent = 
+              event.data.userData.firstName + ' ' + event.data.userData.lastName;
+            document.getElementById('displayEmail').textContent = 
+              event.data.userData.email || 'Not provided';
+            document.getElementById('displayPhone').textContent = 
+              event.data.userData.phone || 'Not provided';
+            document.getElementById('displayLocation').textContent = 
+              event.data.userData.location || 'Not provided';
+            document.getElementById('displayWebsite').textContent = 
+              event.data.userData.website || 'Not provided';
+            document.getElementById('displayCompany').textContent = 
+              event.data.userData.company || 'Not provided';
+          }
+        } else {
+          iframe.classList.add('iframe-height-form');
+          iframe.classList.remove('iframe-height-known-customer');
+          knownCustomerInfo.style.display = 'none';
+        }
+      }
+    });
+  }
+  
+  // Check if customer is known using the worklet
+  async function checkKnownCustomer() {
+    try {
+      // We're in the publisher page, not in a fenced frame, so we need to use the worklet
+      // Load the iframe that contains the form which will check if the user is known
+      const iframe = document.querySelector('.form-iframe');
+      
+      // The iframe will send us a message when it checks if the user is known
+      // We've already set up the message listener in adjustIframeHeight()
+      
+      // Make sure iframe is loaded with the correct URL
+      if (!iframe.src.includes('known-customer.html')) {
+        iframe.src = '{{{contentProducerUrl}}}/url-selection/known-customer.html';
+      }
+    } catch (error) {
+      console.error('Error in publisher page:', error);
+    }
+  }
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    adjustIframeHeight();
+    checkKnownCustomer();
+  });
+</script>

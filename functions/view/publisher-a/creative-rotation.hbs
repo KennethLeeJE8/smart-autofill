@@ -1,0 +1,61 @@
+<main class='demo-container'>
+  <div class='demo__navigation'>
+    <p>
+      [<a href='{{{demoHomeUrl}}}'> Return to main page </a>] [<a href='{{{publisherBUrl}}}/creative-rotation'>
+        Go to "Publisher B" page
+      </a>]
+    </p>
+  </div>
+  <div class='demo__header'>
+    <card class='demo__publisher-badge demo__publisher-badge--publisher-a'>
+      <h5>Publisher A</h5>
+    </card>
+    <h3>Shared storage - Creative rotation demo</h3>
+  </div>
+  <div class='demo__content'>
+    {{> creativeRotationDemoControls}}
+    <card class='demo__description'>
+      <h4>Description</h4>
+      <p>
+        An advertiser may want to show different ads of the same campaign to the user to increase effectiveness of the
+        ads.
+      </p>
+      <p>
+        In this demo, the creative can be rotated with different strategies. In sequential rotation, creatives A, B and
+        C are shown one after another. In even distribution, the creative is selected at random where each creative has
+        an equal chance of being chosen. In weighted distribution, some creatives can be weighted to be chosen more
+        often than another creative.
+      </p>
+      <h4>Code</h4>
+      <ul>
+        <li><a
+            href='https://github.com/GoogleChromeLabs/shared-storage-demo/blob/main/sites/content-producer/url-selection/creative-rotation.js'
+            target='_blank'
+          >Iframe logic</a>
+          (embedded into the publisher page)</li>
+        <li><a
+            href='https://github.com/GoogleChromeLabs/shared-storage-demo/blob/main/sites/content-producer/url-selection/creative-rotation-worklet.js'
+            target='_blank'
+          >Worklet</a>
+          (loaded and executed by the iframe logic)</li>
+      </ul>
+    </card>
+  </div>
+  <card class='demo__instructions'>
+    <p>
+      Shared Storage API is not enabled in your browser. Follow the
+      <a
+        href='https://developer.chrome.com/docs/privacy-sandbox/shared-storage/#try-the-shared-storage-api'
+        target='_blank'
+      >instructions</a>, and enable the the
+      <b>Privacy Sandbox Ads APIs</b>
+      experiment flag at
+      <b>chrome://flags/#privacy-sandbox-ads-apis</b>
+      with Chrome 104.0.5086.0 and above to test this Shared Storage API demo.
+    </p>
+  </card>
+</main>
+<script src="{{{contentProducerUrl}}}/url-selection/creative-rotation.js"></script>
+<script defer>
+  checkSharedStorage()
+</script>

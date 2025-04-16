@@ -1,0 +1,185 @@
+<!--
+ Copyright 2022 Google LLC
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+      http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" />
+    <meta name="description" content="User Information Form" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <title>User Information Form</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/open-props" />
+    <link rel="stylesheet" href="https://unpkg.com/open-props/normalize.min.css" />
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        padding: 20px;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      label {
+        display: block;
+        font-size: 18px;
+        margin-bottom: 8px;
+        font-weight: 500;
+      }
+      input, textarea {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        box-sizing: border-box;
+      }
+      textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+      button {
+        background-color: #0066cc;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        font-size: 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+      }
+      button:hover {
+        background-color: #0055aa;
+      }
+      .success-message {
+        display: none;
+        background-color: #d4edda;
+        color: #155724;
+        padding: 12px;
+        border-radius: 6px;
+        margin-top: 20px;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <form id="userInfoForm">
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" name="firstName" value="Kenneth" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" name="lastName" value="Lee" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" name="phone">
+      </div>
+      
+      <div class="form-group">
+        <label for="about">About Me</label>
+        <textarea id="about" name="about">Endlessly curious and a firm believer in "hard work always pays off"</textarea>
+      </div>
+      
+      <div class="form-group">
+        <label for="company">Company</label>
+        <input type="text" id="company" name="company">
+      </div>
+      
+      <div class="form-group">
+        <label for="location">Location</label>
+        <input type="text" id="location" name="location" value="Cambridge, Massachusetts, United States">
+      </div>
+      
+      <div class="form-group">
+        <label for="website">Website</label>
+        <input type="url" id="website" name="website">
+      </div>
+      
+      <button type="submit">Submit</button>
+    </form>
+    
+    <div id="successMessage" class="success-message">
+      Form data successfully saved! Your information has been securely stored.
+    </div>
+    
+    <script>
+      document.getElementById('userInfoForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Get form values
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const about = document.getElementById('about').value;
+        const company = document.getElementById('company').value;
+        const location = document.getElementById('location').value;
+        const website = document.getElementById('website').value;
+        
+        // Save each field to shared storage
+        if (window.sharedStorage) {
+          window.sharedStorage.set('firstName', firstName);
+          window.sharedStorage.set('lastName', lastName);
+          window.sharedStorage.set('email', email);
+          window.sharedStorage.set('phone', phone);
+          window.sharedStorage.set('about', about);
+          window.sharedStorage.set('company', company);
+          window.sharedStorage.set('location', location);
+          window.sharedStorage.set('website', website);
+          
+          // Set known-customer status to 1 (known) - using the original method
+          window.sharedStorage.set('known-customer', '1');
+        }
+        
+        // Show success message
+        document.getElementById('successMessage').style.display = 'block';
+        
+        // Send to localhost:4437
+        try {
+          const formData = {
+            firstName, lastName, email, phone, about, company, location, website
+          };
+          
+          await fetch('https://localhost:4437', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+          });
+        } catch (error) {
+          console.error('Error sending data:', error);
+        }
+        
+        // Hide success message after 3 seconds
+        setTimeout(() => {
+          document.getElementById('successMessage').style.display = 'none';
+          
+          // Reload the page to trigger the known-customer flow
+          window.parent.location.reload();
+        }, 3000);
+      });
+    </script>
+  </body>
+</html>

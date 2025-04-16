@@ -1,0 +1,102 @@
+{
+  "hosting": [
+    {
+      "site": "shared-storage-demo",
+      "public": "sites/home",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "function": "home"
+        }
+      ]
+    },
+    {
+      "site": "shared-storage-demo-publisher-a",
+      "public": "sites/publisher-a",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "function": "publisherA"
+        }
+      ]
+    },
+    {
+      "site": "shared-storage-demo-publisher-b",
+      "public": "sites/publisher-b",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "function": "publisherB"
+        }
+      ]
+    },
+    {
+      "site": "shared-storage-demo-content-producer",
+      "public": "sites/content-producer",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "function": "contentProducer"
+        },
+        {
+          "source": "/.well-known/**",
+          "function": "contentProducer"
+        }
+      ],
+      "headers": [
+        {
+          "source": "**",
+          "headers": [
+            {
+              "key": "Supports-Loading-Mode",
+              "value": "fenced-frame"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Shared-Storage-Cross-Origin-Worklet-Allowed",
+              "value": "?1"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "emulators": {
+    "functions": {
+      "port": "5080"
+    },
+    "hosting": {
+      "host": "localhost",
+      "port": "3000"
+    },
+    "ui": {
+      "enabled": true
+    }
+  },
+  "functions": {
+    "source": "functions"
+  }
+}

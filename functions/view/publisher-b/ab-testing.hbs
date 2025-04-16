@@ -1,0 +1,64 @@
+<main class='demo-container'>
+  <div class='demo__navigation'>
+    <p>
+      [<a href='{{{demoHomeUrl}}}'> Return to main page </a>] [<a href='{{{publisherAUrl}}}/ab-testing'>
+        Go to "Publisher A" page
+      </a>]
+    </p>
+  </div>
+  <div class='demo__header'>
+    <card class='demo__publisher-badge demo__publisher-badge--publisher-b'>
+      <h5>Publisher B</h5>
+    </card>
+    <h3>Shared storage - A/B testing demo</h3>
+  </div>
+  <div class='demo__content'>
+    <iframe class='demo__dsp-iframe' src='{{{contentProducerUrl}}}/url-selection/ab-testing.html'></iframe>
+
+    <card class='demo__description'>
+      <h4>Description</h4>
+      <p>
+        To see if an experiment has the desired effect, you can conduct A/B testing across multiple sites. As an
+        advertiser, you can choose to render a different ad based on what group the user is assigned to. This group
+        assignment is stored into Shared Storage and can be used cross-site.
+      </p>
+      <p>
+        In this demo, the user can be assigned to
+        <em>"Control"</em>,
+        <em>"Experiment A"</em>, or
+        <em>"Experiment B</em>" groups. The same ad will be rendered across different sites based on what group the user
+        is in. The initial assignment is random, and the demo contains a set of butons to manually add the user to a
+        group.
+      </p>
+      <h4>Code</h4>
+      <ul>
+        <li><a
+            href='https://github.com/GoogleChromeLabs/shared-storage-demo/blob/main/sites/content-producer/url-selection/ab-testing.js'
+            target='_blank'
+          >Iframe logic</a>
+          (embedded into the publisher page)</li>
+        <li><a
+            href='https://github.com/GoogleChromeLabs/shared-storage-demo/blob/main/sites/content-producer/url-selection/ab-testing-worklet.js'
+            target='_blank'
+          >Worklet</a>
+          (loaded and executed by the iframe logic)</li>
+      </ul>
+    </card>
+  </div>
+  <card class='demo__instructions'>
+    <p>
+      Shared Storage API is not enabled in your browser. Follow the
+      <a
+        href='https://developer.chrome.com/docs/privacy-sandbox/shared-storage/#try-the-shared-storage-api'
+        target='_blank'
+      >instructions</a>, and enable the the
+      <b>Privacy Sandbox Ads APIs</b>
+      experiment flag at
+      <b>chrome://flags/#privacy-sandbox-ads-apis</b>
+      with Chrome 104.0.5086.0 and above to test this Shared Storage API demo.
+    </p>
+  </card>
+</main>
+<script defer>
+  checkSharedStorage()
+</script>

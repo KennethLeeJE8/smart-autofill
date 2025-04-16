@@ -1,0 +1,60 @@
+<main class='demo-container'>
+  <div class='demo__navigation'>
+    <p>
+      [<a href='{{{demoHomeUrl}}}'> Return to main page </a>] [<a href='{{{publisherBUrl}}}/creative-selection-by-frequency'>
+        Go to "Publisher B" page
+      </a>]
+    </p>
+  </div>
+  <div class='demo__header'>
+    <card class='demo__publisher-badge demo__publisher-badge--publisher-a'>
+      <h5>Publisher A</h5>
+    </card>
+    <h3>Shared storage - Creative selection by frequency demo</h3>
+  </div>
+  <div class='demo__content'>
+    <iframe class='demo__dsp-iframe' src='{{{contentProducerUrl}}}/url-selection/creative-selection-by-frequency.html'></iframe>
+    <card class='demo__description'>
+      <h4>Description</h4>
+      <p>
+        If an ad creative has been shown to the user too many times, select a different ad.
+      </p>
+        <p>
+          In this demo, when the user sees the same example ad 5 times across both
+          <b>Publisher A</b>
+          and
+          <b>Publisher B</b>
+          sites, the default ad will be selected. The demo contains a button to reset the frequency back to 5.
+        </p>
+      <h4>Code</h4>
+      <ul>
+        <li><a
+            href='https://github.com/GoogleChromeLabs/shared-storage-demo/blob/main/sites/content-producer/url-selection/creative-selection-by-frequency.js'
+            target='_blank'
+          >Iframe logic</a>
+          (embedded into the publisher page)</li>
+        <li><a
+            href='https://github.com/GoogleChromeLabs/shared-storage-demo/blob/main/sites/content-producer/url-selection/creative-selection-by-frequency-worklet.js'
+            target='_blank'
+          >Worklet</a>
+          (loaded and executed by the iframe logic)</li>
+      </ul>
+    </card>
+  </div>
+  <card class='demo__instructions'>
+    <p>
+      Shared Storage API is not enabled in your browser. Follow the
+      <a
+        href='https://developer.chrome.com/docs/privacy-sandbox/shared-storage/#try-the-shared-storage-api'
+        target='_blank'
+      >instructions</a>, and enable the the
+      <b>Privacy Sandbox Ads APIs</b>
+      experiment flag at
+      <b>chrome://flags/#privacy-sandbox-ads-apis</b>
+      with Chrome 104.0.5086.0 and above to test this Shared Storage API demo.
+    </p>
+  </card>
+</main>
+<script defer>
+  checkSharedStorage()
+</script>

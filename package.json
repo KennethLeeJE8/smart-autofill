@@ -1,0 +1,22 @@
+{
+  "name": "shared-storage-example",
+  "author": "kevinkiklee",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "echo",
+    "lint": "npx prettier --write .",
+    "dev": "firebase emulators:start",
+    "shell": "firebase functions:shell",
+    "deploy": "firebase deploy",
+    "logs": "firebase functions:log",
+    "postinstall": "cd functions && npm install && cd ..",
+    "kill-8080": "lsof -ti tcp:8080 | xargs kill -9"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^2.6.2"
+  },
+  "dependencies": {
+    "cors": "^2.8.5"
+  }
+}

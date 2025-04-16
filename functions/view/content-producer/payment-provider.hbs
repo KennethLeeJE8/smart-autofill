@@ -1,0 +1,195 @@
+<!--
+ Copyright 2022 Google LLC
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<link rel='stylesheet' href='../demo.css' />
+<style>
+  body { width: 100%; } :where(h1, h2, h3, h4, h5, h6) { font-weight: var(--font-weight-6); } main { margin: 0 auto;
+  padding: var(--size-5); } p { margin-bottom: var(--size-3); } card { display: flex; flex-direction: column; gap:
+  var(--size-2); background: var(--surface-3); border: 1px solid var(--surface-1); padding: var(--size-4);
+  border-radius: var(--radius-3); box-shadow: var(--shadow-2); } .demo__header { padding: var(--size-5) 0; display:
+  flex; align-items: center; } .demo__publisher-badge { display: flex; margin-right: var(--size-3); justify-content:
+  center; align-items: center; padding: var(--size-3); } .demo__publisher-badge--payment { background-color:
+  var(--blue-5); } .demo__controls { width: 100% !important; max-width: 800px !important; } 
+  .demo__user-data { 
+    margin-top: 20px; 
+    background-color: var(--surface-2); 
+    padding: 20px; 
+    border-radius: 8px; 
+    width: 100%;
+    max-width: 800px;
+  }
+  .demo__user-data h5 { margin-bottom: 10px; }
+  .demo__user-data table { width: 100%; border-collapse: collapse; }
+  .demo__user-data th, .demo__user-data td { padding: 8px; text-align: left; border-bottom: 1px solid var(--surface-4); }
+  .demo__user-data th { font-weight: bold; }
+  .demo__status-container { 
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .demo__status-title { margin-bottom: 10px; font-weight: bold; }
+  #user-status { font-size: 18px; font-weight: bold; }
+  .demo__refresh-button { margin-top: 15px; }
+  .demo__notice { font-size: 14px; margin-top: 10px; color: #666; font-style: italic; }
+  @media screen and (min-width: 481px) { main { max-width: 1000px; }
+  .demo__content { flex-direction: row; align-items: flex-start; } .demo__description { margin-left: var(--size-3); } }
+  @media (prefers-color-scheme: dark) { .demo__publisher-badge--publisher-a { background-color: var(--green-9); }
+  .demo__publisher-badge--publisher-b { background-color: var(--orange-9); } }
+  .demo__form-data table {
+    table-layout: fixed;
+  }
+  .demo__form-data td {
+    word-break: break-word;
+    vertical-align: top;
+  }
+  .demo__form-data th:first-child {
+    width: 30%;
+  }
+  .demo__form-data th:last-child {
+    width: 70%;
+  }
+  main.demo-container {
+    overflow: visible !important;
+    max-width: 1200px !important;
+  }
+</style>
+<script>
+  // Original function for known-customer
+  function resetSharedStorage(status) { 
+    console.log(`user status set to ${status} (0 is unknown / 1 is known)`);
+    window.sharedStorage.set('known-customer', status); 
+    
+    // If status is 0, clear the form data
+    if (status === '0') {
+      clearFormData();
+    } else {
+      // Show the data if it exists
+      checkFormData();
+    }
+  }
+  
+  // New function to display form data
+  async function checkFormData() {
+    // Check if we have form data in storage
+    const knownValue = await window.sharedStorage.get('known-customer');
+    const firstName = await window.sharedStorage.get('firstName');
+    
+    // Always display data section, even if empty
+    await displayFormData();
+    
+    // Show appropriate status message
+    const statusElement = document.getElementById('user-status');
+    if (knownValue === '1') {
+      statusElement.textContent = 'Known Customer (Status: 1)';
+      statusElement.style.color = '#155724';
+    } else {
+      statusElement.textContent = 'Unknown Customer (Status: 0)';
+      statusElement.style.color = '#721c24';
+    }
+  }
+  
+  async function displayFormData() {
+    const fields = ['firstName', 'lastName', 'email', 'phone', 'about', 'company', 'location', 'website'];
+    const formData = {};
+    
+    for (const field of fields) {
+      formData[field] = await window.sharedStorage.get(field) || '-';
+    }
+    
+    const tableBody = document.getElementById('user-data-table-body');
+    tableBody.innerHTML = '';
+    
+    for (const [key, value] of Object.entries(formData)) {
+      const row = document.createElement('tr');
+      
+      const fieldCell = document.createElement('td');
+      fieldCell.textContent = key;
+      
+      const valueCell = document.createElement('td');
+      valueCell.textContent = value;
+      
+      row.appendChild(fieldCell);
+      row.appendChild(valueCell);
+      tableBody.appendChild(row);
+    }
+    
+    // Always show the container
+    document.getElementById('user-data-container').style.display = 'block';
+  }
+  
+  function clearFormData() {
+    const fields = ['firstName', 'lastName', 'email', 'phone', 'about', 'company', 'location', 'website'];
+    
+    for (const field of fields) {
+      window.sharedStorage.delete(field);
+    }
+    
+    // Update the display to show empty values
+    checkFormData();
+  }
+  
+  // Run on page load
+  window.addEventListener('DOMContentLoaded', checkFormData);
+</script>
+
+<main class='demo-container'>
+  <div class='demo__navigation'>
+    <p>
+      [<a href='{{{demoHomeUrl}}}'>Return to main page</a>] [<a href='{{{publisherAUrl}}}/known-customer'>Go to
+        "Publisher A" page</a>] [<a href='{{{publisherBUrl}}}/known-customer'>Go to "Publisher B" page</a>]
+    </p>
+  </div>
+  <div class='demo__header'>
+    <card class='demo__publisher-badge demo__publisher-badge--payment'>
+      <h5>Payment provider</h5>
+    </card>
+    <h3>Shared storage - Known customer demo</h3>
+  </div>
+  <div class='demo__controls'>
+    <div class='demo__status-container'>
+      <div class='demo__status-title'>Current User Status:</div>
+      <div id="user-status">Loading status...</div>
+      <div class="demo__notice">Status is stored in 'known-customer' key in shared storage.</div>
+    </div>
+    
+    <div class='demo__buttons-container'>
+      <h5>Demo control</h5>
+      <button class='mdl-button mdl-js-button mdl-button--raised demo__button' onclick="resetSharedStorage('1')">
+        Set user status to "Known"
+      </button>
+      <button class='mdl-button mdl-js-button mdl-button--raised demo__button' onclick="resetSharedStorage('0')">
+        Reset user status
+      </button>
+      <button class='mdl-button mdl-js-button mdl-button--raised demo__button demo__refresh-button' onclick="checkFormData()">
+        Refresh Data
+      </button>
+    </div>
+    
+    <div id="user-data-container" class="demo__user-data">
+      <h5>User Form Data in Shared Storage</h5>
+      <div class="demo__notice">This data is stored as individual key/value pairs in shared storage.</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Field Name (Key)</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody id="user-data-table-body">
+          <!-- Dynamically filled by JS -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>

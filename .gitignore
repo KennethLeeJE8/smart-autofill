@@ -34,3 +34,6 @@ yarn-error.log*
 
 # OS specific
 .DS_Store
+
+firebase-debug.log*
+firebase-debug.log
